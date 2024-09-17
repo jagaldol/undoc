@@ -7,11 +7,13 @@ import Mobile from "@/utils/mobile"
 export default function MessageInputContainer({
   messages,
   handleStreamMessage,
+  endStreamMessage,
   addUserMessage,
   prepareRegenerate,
 }: {
   messages: ChatMessage[]
   handleStreamMessage: (message: string) => void
+  endStreamMessage: () => void
   addUserMessage: (message: string) => void
   prepareRegenerate: () => void
 }) {
@@ -55,46 +57,30 @@ export default function MessageInputContainer({
   }
 
   async function generateAIResponse(userInputValue: string, regenerate: boolean) {
-    const url = `${process.env.NEXT_PUBLIC_WS_URL}/api/public-chat`
+    const history = makeHistory()
+    const query = regenerate ? history[history.length - 1][0] : userInputValue
 
-    const socket = new WebSocket(url)
+    // 새로운 EventSource 연결 생성
+    const newEventSource = new EventSource(`${process.env.NEXT_PUBLIC_API_URL}?query=${query}`)
 
-    let successConnect = false
-
-    socket.addEventListener("open", () => {
-      // 서버로 메시지 전송
-      successConnect = true
-      const messageToSend = JSON.stringify({
-        input: userInputValue,
-        history: makeHistory(),
-        regenerate,
-      })
-
-      socket.send(messageToSend)
-    })
-
-    socket.addEventListener("message", (event) => {
-      const res = JSON.parse(event.data)
-      switch (res.event) {
-        case "text_stream": {
-          handleStreamMessage(res.response)
-          return
-        }
-        case "stream_end":
-          break
-        case "error":
-          alert(res.response)
-          break
-        default:
-          alert("서버 통신 중 오류가 발생했습니다.")
+    // 메시지 수신 핸들러 설정
+    newEventSource.onmessage = (event) => {
+      if (event.data === "<stream_end_token>") {
+        setIsGenerating(false)
+        endStreamMessage()
+        newEventSource.close()
+        return
       }
-      socket.close()
-    })
+      const formattedToken = event.data.replace(/<enter_token>/g, "\n")
+      handleStreamMessage(formattedToken)
+    }
 
-    socket.addEventListener("close", () => {
+    // 에러 핸들러 설정
+    newEventSource.onerror = () => {
+      newEventSource.close() // 연결 종료
+      alert("채팅 서버에 연결할 수 없습니다!")
       setIsGenerating(false)
-      if (!successConnect) alert("채팅 서버에 연결할 수 없습니다!")
-    })
+    }
   }
 
   const onRegenerateClick = () => {

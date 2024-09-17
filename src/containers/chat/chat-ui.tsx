@@ -32,8 +32,8 @@ export default function ChatUi() {
     setMessages((prevState) => {
       const lastMessage = prevState[prevState.length - 1]
       if (lastMessage && lastMessage.isFromChatbot) {
-        lastMessage.content = message
-        return [...prevState.slice(0, -1), lastMessage]
+        const updatedMessage: ChatMessage = { ...lastMessage, content: lastMessage.content + message }
+        return [...prevState.slice(0, -1), updatedMessage]
       }
       const chatMessage: ChatMessage = {
         key: 0,
@@ -41,6 +41,13 @@ export default function ChatUi() {
         isFromChatbot: true,
       }
       return [...prevState, ...toChatMessageFormat([chatMessage])]
+    })
+  }
+
+  const endStreamMessage = async () => {
+    setMessages((prevState) => {
+      const lastMessage = prevState[prevState.length - 1]
+      return [...prevState.slice(0, -1), { ...lastMessage, content: lastMessage.content.trim() }]
     })
   }
 
@@ -54,6 +61,7 @@ export default function ChatUi() {
       <MessageInputContainer
         messages={messages}
         handleStreamMessage={handleStreamMessage}
+        endStreamMessage={endStreamMessage}
         addUserMessage={(message: string) => addMessage(message, false)}
         prepareRegenerate={prepareRegenerate}
       />
