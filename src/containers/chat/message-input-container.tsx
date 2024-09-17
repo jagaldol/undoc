@@ -61,7 +61,7 @@ export default function MessageInputContainer({
     const query = regenerate ? history[history.length - 1][0] : userInputValue
 
     // 새로운 EventSource 연결 생성
-    const newEventSource = new EventSource(`${process.env.NEXT_PUBLIC_API_URL}?query=${query}`)
+    const newEventSource = new EventSource(`/api/chat?query=${query}`)
 
     // 메시지 수신 핸들러 설정
     newEventSource.onmessage = (event) => {
