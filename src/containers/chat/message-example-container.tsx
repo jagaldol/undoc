@@ -10,13 +10,13 @@ export default function MessageExampleContainer({ onClickExample }: { onClickExa
 
   return (
     <div className="w-[800px] max-lg:w-[80%] max-md:w-[90%] flex flex-col gap-10 items-start">
-      <div className="flex flex-col gap-2 items-start">
+      <div className="flex flex-col gap-5 items-start">
         <p className="font-bold text-sm relative after:content-[''] after:w-full after:h-1 after:bg-main-theme/40 after:absolute after:left-0 after:bottom-0">
           24시간 의료 Q&A 서비스
         </p>
-        <div className="font-bold text-3xl max-md:text-xl">
+        <div className="text-3xl max-md:text-xl font-bold">
           <p>
-            <span className="text-main-theme">언닥: 언제 어디서든 닥터</span>
+            <span className="text-main-theme font-GmarketSansMedium">언닥: 언제 어디서든 닥터</span>
           </p>
           <p>진단, 증상 무엇이든 물어보세요.</p>
         </div>
