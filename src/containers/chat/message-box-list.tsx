@@ -5,8 +5,10 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { materialDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
 import { FaUser } from "react-icons/fa6"
 import Image from "next/image"
+import { useRecoilValue } from "recoil"
 import { ChatMessage } from "@/types/chat"
 import Logo from "@/static/logo.png"
+import messagesState from "@/states/messagesState"
 
 function CodeBlock(props: any) {
   const { children, className, node, ref, ...rest } = props
@@ -56,15 +58,8 @@ function MessageBox({ message }: { message: ChatMessage }) {
   )
 }
 
-export default function MessageBoxList({
-  messages, // cursor, getMessages,
-}: {
-  messages: ChatMessage[]
-  // cursor: Cursor
-  // getMessages: (_cursor: Cursor) => void
-}) {
-  // const [prevScrollHeight, setPrevScrollHeight] = useState(0)
-
+export default function MessageBoxList() {
+  const messages = useRecoilValue(messagesState)
   const scrollTraceDownChatBox = () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 30) {
       window.scrollTo(0, document.body.scrollHeight)
@@ -74,26 +69,6 @@ export default function MessageBoxList({
   useEffect(() => {
     scrollTraceDownChatBox()
   }, [messages])
-
-  // useEffect(() => {
-  //   const instance = chatBox.current!
-  //   const handleScroll = () => {
-  //     const { scrollTop, scrollHeight } = instance
-  //
-  //     if (scrollTop === 0 && chatroomId !== 0) {
-  //       getMessages(cursor)
-  //       // TODO: 위에 메시지들 끼워넣고 올바른 위치로 스크롤 옮기기
-  //       instance.scrollTop = scrollHeight - prevScrollHeight
-  //       setPrevScrollHeight(scrollHeight)
-  //     }
-  //   }
-  //
-  //   instance.addEventListener("scroll", handleScroll)
-  //
-  //   return () => {
-  //     instance.removeEventListener("scroll", handleScroll)
-  //   }
-  // }, [prevScrollHeight, chatroomId, cursor, getMessages])
 
   return (
     <div className="w-full h-full" id="chat-main">

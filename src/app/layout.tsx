@@ -4,6 +4,7 @@ import { Noto_Sans_KR } from "next/font/google"
 import Header from "@/containers/home/header"
 import ConfirmModal from "@/containers/home/confirmModal"
 import Footer from "@/containers/home/footer"
+import RecoilRootWrapper from "@/wrappers/RecoilRootWrapper"
 
 const notoSans = Noto_Sans_KR({
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -29,10 +30,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         }}
       >
         <main className="flex grow flex-col">
-          <Header />
-          <section className="grow">{children}</section>
-          <ConfirmModal />
-          <Footer />
+          <RecoilRootWrapper>
+            <Header />
+            <section className="grow">{children}</section>
+            <ConfirmModal />
+            <Footer />
+          </RecoilRootWrapper>
         </main>
       </body>
     </html>

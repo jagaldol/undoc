@@ -1,13 +1,15 @@
 "use client"
 
 import React, { useRef, useState } from "react"
+import { useRecoilState } from "recoil"
 import MessageInputContainer from "@/containers/chat/message-input-container"
 import { ChatMessage } from "@/types/chat"
 import MessageExampleContainer from "@/containers/chat/message-example-container"
 import MessageBoxList from "@/containers/chat/message-box-list"
+import messagesState from "@/states/messagesState"
 
 export default function ChatUi() {
-  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [messages, setMessages] = useRecoilState(messagesState)
   const messageNextKey = useRef<number>(1)
 
   const [isGenerating, setIsGenerating] = useState(false)
@@ -143,15 +145,10 @@ export default function ChatUi() {
             }}
           />
         ) : (
-          <MessageBoxList
-            messages={messages}
-            // cursor={cursor}
-            // getMessages={getMessages}
-          />
+          <MessageBoxList />
         )}
       </div>
       <MessageInputContainer
-        messages={messages}
         onSendClick={onSendClick}
         onRegenerateClick={onRegenerateClick}
         isGenerating={isGenerating}

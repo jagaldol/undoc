@@ -10,7 +10,7 @@ export default function ConfirmModal() {
   return (
     isOpen && (
       <div className="bg-black/20 h-full w-full z-30 flex fixed left-0 top-0 items-center justify-center px-5">
-        <div className="flex fixed flex-col w-[400px] bg-white shadow-[3px_3px_11px_0_rgba(0,0,0,0.1)] px-5 py-8 max-md:w-4/5 rounded-3xl">
+        <div className="flex fixed flex-col w-[400px] bg-white shadow-[3px_3px_11px_0_rgba(0,0,0,0.1)] px-5 py-8 max-sm:w-4/5 rounded-3xl">
           <div role="presentation" className="flex justify-end" />
           <div className="flex flex-col justify-center">
             <div className="flex items-center justify-center">
