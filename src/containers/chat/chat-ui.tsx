@@ -23,13 +23,13 @@ export default function ChatUi() {
     })
   }
   const addMessage = (message: string, isFromChatbot: boolean) => {
-    setMessages((messagesState) => {
+    setMessages((prevState) => {
       const chatMessage: ChatMessage = {
         key: 0,
         content: message,
         isFromChatbot,
       }
-      return [...messagesState, ...toChatMessageFormat([chatMessage])]
+      return [...prevState, ...toChatMessageFormat([chatMessage])]
     })
   }
 
