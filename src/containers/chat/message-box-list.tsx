@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { useEffect } from "react"
+import Markdown from "react-markdown"
 import { ChatMessage } from "@/types/chat"
 
 function MessageBox({ message }: { message: ChatMessage }) {
@@ -21,7 +22,9 @@ function MessageBox({ message }: { message: ChatMessage }) {
             style={{ height: "40px" }}
           />
         </div>
-        <p className="break-all whitespace-pre-line max-md:text-sm">{message.content}</p>
+        <div className="break-all whitespace-pre-line max-md:text-sm">
+          <Markdown>{message.content}</Markdown>
+        </div>
       </div>
     </div>
   )
