@@ -12,6 +12,66 @@
 /*    rgb(var(--background-start-rgb));*/
 /*}*/
 
+@layer components {
+    .text-container p {
+        @apply my-4;
+    }
+
+    .text-container h1 {
+        @apply text-3xl max-md:text-xl font-bold mt-6 mb-4;
+    }
+
+    .text-container h2 {
+        @apply text-2xl max-md:text-lg font-semibold mt-20 mb-3;
+    }
+
+    .text-container h3 {
+        @apply text-xl max-md:text-base font-semibold mt-4 mb-2;
+    }
+
+    .text-container p {
+        @apply my-3;
+    }
+
+    .text-container ul {
+        @apply list-disc ml-5;
+    }
+    .text-container ul:first-child {
+        @apply list-disc ml-5;
+    }
+
+    .text-container ol {
+        @apply list-decimal ml-5;
+    }
+    .text-container a {
+        @apply text-blue-600 hover:text-blue-800;
+    }
+    .text-container img {
+        @apply max-w-full h-auto inline-block ;
+    }
+    .text-container pre {
+        @apply rounded;
+    }
+    .text-container pre > div{
+        @apply rounded-lg;
+    }
+    .text-container code {
+        @apply bg-gray-200 rounded text-blue-500 px-1 font-semibold;
+    }
+    .text-container pre code {
+        @apply bg-transparent font-normal;
+    }
+    .text-container hr {
+        @apply border border-b-gray-400 rounded-full;
+    }
+    .text-container blockquote {
+        @apply border-l-4 border-gray-400 pl-4 italic;
+    }
+    .text-container summary {
+        @apply hover:cursor-pointer;
+    }
+}
+
 @layer utilities {
     .custom-scroll-bar-4px::-webkit-scrollbar-thumb:hover {
         background-color: rgb(0,0,0,0.3);
