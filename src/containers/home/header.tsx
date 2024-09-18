@@ -6,9 +6,7 @@ export default function Header() {
     <header className="z-10 sticky top-0 pt-5 bg-white flex items-center">
       <div className="w-full flex flex-col justify-center">
         <a className="flex items-center justify-center" href="/">
-          <div className="min-w-fit">
-            <Image src="/svg/logo.png" alt="logo" width={45} height={45} className="max-md:h-6 max-md:w-6" />
-          </div>
+          <Image src="/svg/logo.png" alt="logo" width={45} height={45} className="max-md:h-6 max-md:w-6" />
           <h1
             className={`text-5xl max-lg:text-4xl max-md:text-2xl text-main-theme font-bold ml-1 ${titleFont.className}`}
           >

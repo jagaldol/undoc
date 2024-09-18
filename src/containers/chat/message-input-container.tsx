@@ -1,24 +1,19 @@
 import Image from "next/image"
-import { useState } from "react"
 import { ChatMessage } from "@/types/chat"
 import { limitInputNumber, pressEnter } from "@/utils/utils"
 import Mobile from "@/utils/mobile"
 
 export default function MessageInputContainer({
   messages,
-  handleStreamMessage,
-  endStreamMessage,
-  addUserMessage,
-  prepareRegenerate,
+  onSendClick,
+  onRegenerateClick,
+  isGenerating,
 }: {
   messages: ChatMessage[]
-  handleStreamMessage: (message: string) => void
-  endStreamMessage: () => void
-  addUserMessage: (message: string) => void
-  prepareRegenerate: () => void
+  onSendClick: () => void
+  onRegenerateClick: () => void
+  isGenerating: boolean
 }) {
-  const [isGenerating, setIsGenerating] = useState(false)
-
   const isMobile = Mobile()
 
   const resizeBox = () => {
@@ -30,117 +25,14 @@ export default function MessageInputContainer({
     }
   }
 
-  const makeHistory = () => {
-    const messages38 = messages.slice(-38)
-    const formattedMessages: string[] = []
-    messages38.forEach((message) => {
-      const isChatbotTurn = formattedMessages.length % 2 === 1
-
-      if (isChatbotTurn && !message.isFromChatbot) {
-        formattedMessages.push("")
-      }
-      if (!isChatbotTurn && message.isFromChatbot) {
-        formattedMessages.push("")
-      }
-      formattedMessages.push(message.content)
-    })
-
-    if (formattedMessages.length % 2 === 1) formattedMessages.push("")
-
-    const formattedMessages38 = formattedMessages.slice(-38)
-
-    const history: string[][] = []
-    for (let i = 0; i < formattedMessages38.length; i += 2) {
-      history.push([formattedMessages38[i], formattedMessages38[i + 1]])
-    }
-    return history
-  }
-
-  async function generateAIResponse(userInputValue: string, regenerate: boolean) {
-    const history = makeHistory()
-    const query = regenerate ? history[history.length - 1][0] : userInputValue
-
-    // 새로운 EventSource 연결 생성
-    const newEventSource = new EventSource(`/api/chat?query=${query}`)
-
-    // 메시지 수신 핸들러 설정
-    newEventSource.onmessage = (event) => {
-      if (event.data === "<stream_end_token>") {
-        setIsGenerating(false)
-        endStreamMessage()
-        newEventSource.close()
-        return
-      }
-      const formattedToken = event.data.replace(/<enter_token>/g, "\n")
-      handleStreamMessage(formattedToken)
-    }
-
-    // 에러 핸들러 설정
-    newEventSource.onerror = () => {
-      newEventSource.close() // 연결 종료
-      alert("채팅 서버에 연결할 수 없습니다!")
-      setIsGenerating(false)
-    }
-  }
-
-  const onRegenerateClick = () => {
-    if (isGenerating) return
-    setIsGenerating(true)
-    prepareRegenerate()
-    generateAIResponse("", true).then(() => {})
-  }
-
-  const onSendClick = () => {
-    if (isGenerating) return
-    const userInputBox = document.querySelector<HTMLTextAreaElement>("#user-input-box")
-
-    const userInputValue = userInputBox!.value
-    if (userInputValue) {
-      addUserMessage(userInputValue)
-      setIsGenerating(true)
-      generateAIResponse(userInputValue, false).then(() => {})
-      userInputBox!.value = ""
-      resizeBox()
-    }
-  }
-
-  const exampleQuestions = [
-    "여드름을 관리하고 예방하려면 어떻게 해야 하나요?",
-    "소화불량이 발생할 때, 어떤 식습관을 개선해야 할까요?",
-    "사마귀 예방에 대해 어떤 방법이 있나요?",
-    "발목을 삐었을 때 어떻게 해야 하나요?",
-  ]
-
-  const renderExampleButtons = () => {
-    const maxButtons = isMobile ? 2 : exampleQuestions.length
-    return exampleQuestions.slice(0, maxButtons).map((question) => (
-      <button
-        type="button"
-        key={question} // 고유한 값인 question을 key로 사용
-        className="px-4 py-2 text-main-theme rounded-lg border border-main-theme hover:bg-main-theme hover:text-white hover:border-white max-md:text-sm"
-        onClick={() => {
-          addUserMessage(question)
-          setIsGenerating(true)
-          generateAIResponse(question, false).then(() => {})
-        }}
-      >
-        {question}
-      </button>
-    ))
+  const onSendButtonClick = () => {
+    onSendClick()
+    resizeBox()
   }
 
   return (
     <div className="sticky bottom-6 max-md:bottom-10 flex flex-col items-center bg-white">
-      {messages.length === 0 && (
-        <div
-          className={`justify-center w-[50%] max-lg:w-[70%] max-md:w-[90%] grid ${
-            isMobile ? "grid-cols-1" : "grid-cols-2"
-          } gap-4 mb-2 `}
-        >
-          {renderExampleButtons()}
-        </div>
-      )}
-      <div className="flex justify-center items-center mt-3 mb-6 max-md:mb-2 w-[50%] max-lg:w-[70%] max-md:w-[90%] border-2 border-solid border-main-theme rounded-full py-3 max-md:py-2 box-content focus-within:shadow-focus-main-theme-thin">
+      <div className="flex justify-center items-center mt-3 mb-6 max-md:mb-2 w-[800px] max-lg:w-[80%] max-md:w-[90%] border-2 border-solid border-main-theme rounded-full py-3 max-md:py-2 box-content focus-within:shadow-focus-main-theme-thin">
         <button
           type="button"
           className={`px-8 border bg-white border-gray-400 rounded flex justify-center items-center py-1.5 mb-4 absolute -top-9 opacity-70 hover:opacity-100 transition${
@@ -166,14 +58,14 @@ export default function MessageInputContainer({
             resizeBox()
           }}
           onKeyDown={(e) => {
-            pressEnter(e, onSendClick)
+            pressEnter(e, onSendButtonClick)
           }}
           placeholder="메시지를 입력해주세요"
         />
         <button
           type="button"
           className={`w-10 pr-5 flex justify-center items-center${isGenerating ? " hover:cursor-default" : ""}`}
-          onClick={onSendClick}
+          onClick={onSendButtonClick}
         >
           {isGenerating ? (
             <div className="-translate-x-2">

@@ -11,7 +11,7 @@ function MessageBox({ message }: { message: ChatMessage }) {
     <div
       className={`${message.isFromChatbot ? "bg-bg-theme " : ""}pt-10 pb-14 flex justify-center items-center w-full`}
     >
-      <div className="w-[50%] max-lg:w-[70%] max-md:w-[90%] flex">
+      <div className="w-[800px] max-lg:w-[80%] max-md:w-[90%] flex">
         <div className={`${message.isFromChatbot ? "" : ""} min-w-[30px] mr-10 max-md:mr-5 h-fit`}>
           <Image
             src={`${message.isFromChatbot ? "/svg/logo.png" : "/svg/user.svg"}`}
