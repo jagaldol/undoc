@@ -31,7 +31,7 @@ export default function MessageInputContainer({
   }
 
   return (
-    <div className="sticky bottom-6 max-md:bottom-10 flex flex-col items-center bg-white">
+    <div className="sticky pb-6 max-md:pb-10 bottom-0 flex flex-col items-center bg-white">
       <div className="flex justify-center items-center mt-3 mb-6 max-md:mb-2 w-[800px] max-lg:w-[80%] max-md:w-[90%] border-2 border-solid border-main-theme rounded-full py-3 max-md:py-2 box-content focus-within:shadow-focus-main-theme-thin">
         <button
           type="button"
