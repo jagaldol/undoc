@@ -1,4 +1,5 @@
-import Image from "next/image"
+import { IoSend } from "react-icons/io5"
+import { TbRefresh } from "react-icons/tb"
 import { ChatMessage } from "@/types/chat"
 import { limitInputNumber, pressEnter } from "@/utils/utils"
 import Mobile from "@/utils/mobile"
@@ -35,19 +36,12 @@ export default function MessageInputContainer({
       <div className="flex justify-center items-center mt-3 mb-6 max-md:mb-2 w-[800px] max-lg:w-[80%] max-md:w-[90%] border-2 border-solid border-main-theme rounded-full py-3 max-md:py-2 box-content focus-within:shadow-focus-main-theme-thin">
         <button
           type="button"
-          className={`px-8 border bg-white border-gray-400 rounded flex justify-center items-center py-1.5 mb-4 absolute -top-9 opacity-70 hover:opacity-100 transition${
+          className={`px-8 border bg-white border-main-theme text-main-theme rounded-lg flex justify-center items-center py-1.5 mb-4 absolute -top-9 opacity-70 hover:opacity-100 transition${
             messages.length !== 0 && !isGenerating ? "" : " invisible"
           }`}
           onClick={onRegenerateClick}
         >
-          <Image
-            src="/svg/refresh.svg"
-            alt=""
-            width="16"
-            height="16"
-            style={{ width: "16px", height: "16px" }}
-            className="max-md:h-3.5 max-md:w-3.5"
-          />
+          <TbRefresh />
           <p className="ml-2 text-sm max-md:text-xs">답변 재생성</p>
         </button>
         <textarea
@@ -64,7 +58,7 @@ export default function MessageInputContainer({
         />
         <button
           type="button"
-          className={`w-10 pr-5 flex justify-center items-center${isGenerating ? " hover:cursor-default" : ""}`}
+          className={`pr-5 flex justify-center items-center${isGenerating ? " hover:cursor-default" : ""}`}
           onClick={onSendButtonClick}
         >
           {isGenerating ? (
@@ -72,7 +66,7 @@ export default function MessageInputContainer({
               <div className="dot-elastic" />
             </div>
           ) : (
-            <Image src="/svg/send.svg" alt="전송" width="16" height="16" />
+            <IoSend size={20} className="text-gray-500" />
           )}
         </button>
       </div>

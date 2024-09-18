@@ -3,7 +3,10 @@ import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { materialDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import { FaUser } from "react-icons/fa6"
+import Image from "next/image"
 import { ChatMessage } from "@/types/chat"
+import Logo from "@/static/logo.png"
 
 function CodeBlock(props: any) {
   const { children, className, node, ref, ...rest } = props
@@ -31,15 +34,13 @@ function MessageBox({ message }: { message: ChatMessage }) {
       className={`${message.isFromChatbot ? "bg-bg-theme " : ""}pt-10 pb-14 flex justify-center items-center w-full`}
     >
       <div className="w-[800px] max-lg:w-[80%] max-md:w-[90%] flex">
-        {/* <div className={`${message.isFromChatbot ? "" : ""} min-w-[40px] mr-10 max-md:mr-5 h-fit`}> */}
-        {/*   <Image */}
-        {/*    src={`${message.isFromChatbot ? Logo : "/svg/user.svg"}`} */}
-        {/*    alt="icon" */}
-        {/*    width={40} */}
-        {/*    height={40} */}
-        {/*    style={{ height: "40px" }} */}
-        {/*   /> */}
-        {/* </div> */}
+        <div className={`${message.isFromChatbot ? "" : ""} min-w-[40px] mr-5 max-md:mr-2 h-fit mt-1.5`}>
+          {message.isFromChatbot ? (
+            <Image src={Logo} alt="icon" className="w-10" />
+          ) : (
+            <FaUser className="text-main-theme" size={30} />
+          )}
+        </div>
         <div className="break-all max-md:text-sm text-container">
           <Markdown
             remarkPlugins={[remarkGfm]}
