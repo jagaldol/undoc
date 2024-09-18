@@ -2,7 +2,6 @@
 
 import React, { useState } from "react"
 import Image from "next/image"
-import titleFont from "@/styles/TitleFont"
 import Logo from "@/static/logo.png"
 
 export default function ConfirmModal() {
@@ -15,7 +14,7 @@ export default function ConfirmModal() {
           <div className="flex flex-col justify-center">
             <div className="flex items-center justify-center">
               <Image src={Logo} alt="logo" className="w-8" />
-              <p className={`text-3xl max-md:text-2xl text-main-theme ml-1 font-bold ${titleFont.className}`}>
+              <p className="text-3xl max-md:text-2xl text-main-theme ml-1 font-bold font-GmarketSansMedium pt-1">
                 AI 언닥
               </p>
             </div>

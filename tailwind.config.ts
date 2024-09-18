@@ -11,9 +11,9 @@ const config: Config = {
       boxShadow: {
         "focus-main-theme-thin": "0 0 4px 4px rgba(54, 93, 164, 0.1)", // main-theme 색상의 투명도를 조정하여 그림자 생성
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        GmarketSansMedium: ["GmarketSansMedium", "Arial", "Helvetica", "sans-serif"],
+        SUITRegular: ["SUIT-Regular", "Arial", "Helvetica", "sans-serif"],
       },
     },
   },
