@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import Image from "next/image"
 import titleFont from "@/styles/TitleFont"
+import Logo from "@/static/logo.png"
 
 export default function ConfirmModal() {
   const [isOpen, setIsOpen] = useState(true)
@@ -13,7 +14,7 @@ export default function ConfirmModal() {
           <div role="presentation" className="flex justify-end" />
           <div className="flex flex-col justify-center">
             <div className="flex items-center justify-center">
-              <Image src="/svg/logo.png" alt="logo" width={35} height={35} />
+              <Image src={Logo} alt="logo" className="w-8" />
               <p className={`text-3xl max-md:text-2xl text-main-theme ml-1 font-bold ${titleFont.className}`}>
                 AI 언닥
               </p>
