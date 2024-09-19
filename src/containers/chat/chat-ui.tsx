@@ -138,7 +138,6 @@ export default function ChatUi() {
       }
     } catch (error) {
       // 에러 발생 시 연결 종료 및 알림
-      alert("채팅 서버에 연결할 수 없습니다!")
       setIsGenerating(false)
     }
   }
