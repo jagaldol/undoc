@@ -32,7 +32,7 @@
     }
 
     .text-container h2 {
-        @apply text-2xl max-md:text-lg font-semibold mt-20 mb-3;
+        @apply text-2xl max-md:text-lg font-semibold mt-5 mb-3;
     }
 
     .text-container h3 {
