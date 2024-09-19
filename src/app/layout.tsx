@@ -1,28 +1,27 @@
 import "@/styles/globals.css"
 import { ReactNode } from "react"
-import { Noto_Sans_KR } from "next/font/google"
+import { Viewport } from "next"
 import Header from "@/containers/home/header"
 import ConfirmModal from "@/containers/home/confirmModal"
 import Footer from "@/containers/home/footer"
 import RecoilRootWrapper from "@/wrappers/RecoilRootWrapper"
-
-const notoSans = Noto_Sans_KR({
-  weight: ["100", "300", "400", "500", "700", "900"],
-  subsets: ["latin"],
-  display: "swap",
-  fallback: ["Malgun Gothic", "Roboto", "sans-serif"],
-})
 
 export const metadata = {
   title: "AI UnDoc | 언제 어디서든지 닥터",
   description: "AI 언닥: '언제 어디서든지 닥터'에게 물어보세요",
 }
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+}
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko">
       <body
-        className={`${notoSans.className} flex box-border`}
+        className="flex box-border"
         style={{
           minHeight: "calc(var(--vh, 1vh) * 100)",
           margin: 0,

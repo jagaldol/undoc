@@ -3,6 +3,13 @@ import { FaStethoscope } from "react-icons/fa6"
 import { GiPill } from "react-icons/gi"
 import { TbVaccine } from "react-icons/tb"
 import { BsFillHeartPulseFill } from "react-icons/bs"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Grid, Pagination } from "swiper/modules"
+
+// Import Swiper styles
+import "swiper/css"
+import "swiper/css/grid"
+import "swiper/css/pagination"
 
 export default function MessageExampleContainer({ onClickExample }: { onClickExample: (example: string) => void }) {
   const exampleQuestions = [
@@ -30,15 +37,10 @@ export default function MessageExampleContainer({ onClickExample }: { onClickExa
       content:
         "체중 감량을 목표로 하고 있는데, 무리하지 않으면서도 효과적으로 체중을 줄일 수 있는 건강한 식단 구성 방법에 대해 알고 싶습니다. 또한, 적절한 운동 방법도 함께 알고 싶어요.",
     },
-    //
-    // "여드름을 관리하고 예방하려면 어떻게 해야 하나요?",
-    // "소화불량이 발생할 때, 어떤 식습관을 개선해야 할까요?",
-    // "사마귀 예방에 대해 어떤 방법이 있나요?",
-    // "발목을 삐었을 때 어떻게 해야 하나요?",
   ]
 
   return (
-    <div className="w-[800px] max-lg:w-[80%] max-md:w-[90%] flex flex-col gap-10 max-sm:gap-5 items-start">
+    <div className="w-[800px] max-lg:w-[700px] max-md:w-[600px] max-sm:w-[350px] flex flex-col gap-10 max-sm:gap-5 items-start">
       <div className="flex flex-col gap-5 items-start">
         <p className="font-bold text-sm relative after:content-[''] after:w-full after:h-1 after:bg-main-theme/40 after:absolute after:left-0 after:bottom-0">
           24시간 의료 Q&A 서비스
@@ -50,24 +52,45 @@ export default function MessageExampleContainer({ onClickExample }: { onClickExa
           <p>진단, 증상 무엇이든 물어보세요.</p>
         </div>
       </div>
-      <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-3 w-full">
-        {exampleQuestions.map((example) => (
-          <button
-            type="button"
-            key={example.title} // 고유한 값인 question을 key로 사용
-            className="h-28 p-4 bg-bg-theme rounded-lg hover:bg-main-theme/20 max-md:text-xs text-sm flex transition-all"
-            onClick={() => onClickExample(example.content)}
-          >
-            <div className="flex flex-col gap-2 w-full text-left">
-              <div className="flex items-center gap-1 text-main-theme font-bold text-lg max-md:text-base">
-                {example.icon}
-                <p>{example.title}</p>
-              </div>
-              <p className="line-clamp-2 text-ellipsis">{example.content}</p>
-            </div>
-          </button>
-        ))}
-        <div />
+      <div className="w-full">
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={10} // 각 슬라이드 간 간격
+          pagination={{ clickable: true }}
+          grid={{
+            rows: 2,
+            fill: "row",
+          }}
+          modules={[Grid, Pagination]}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+              grid: {
+                rows: 2,
+                fill: "row",
+              },
+            },
+          }}
+        >
+          {exampleQuestions.map((example) => (
+            <SwiperSlide key={example.title}>
+              <button
+                type="button"
+                className="h-28 p-4 bg-bg-theme rounded-lg hover:bg-main-theme/20 max-md:text-xs text-sm flex transition-all"
+                onClick={() => onClickExample(example.content)}
+              >
+                <div className="flex flex-col gap-2 w-full text-left">
+                  <div className="flex items-center gap-1 text-main-theme font-bold text-lg max-md:text-base">
+                    {example.icon}
+                    <p>{example.title}</p>
+                  </div>
+                  <p className="line-clamp-2 text-ellipsis">{example.content}</p>
+                </div>
+              </button>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   )
