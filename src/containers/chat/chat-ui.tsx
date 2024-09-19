@@ -33,7 +33,7 @@ export default function ChatUi() {
     })
   }
 
-  const handleStreamMessage = async (message: string) => {
+  const handleStreamMessage = (message: string) => {
     setMessages((prevState) => {
       const lastMessage = prevState[prevState.length - 1]
       if (lastMessage && lastMessage.isFromChatbot) {
@@ -49,7 +49,7 @@ export default function ChatUi() {
     })
   }
 
-  const endStreamMessage = async () => {
+  const endStreamMessage = () => {
     setMessages((prevState) => {
       const lastMessage = prevState[prevState.length - 1]
       return [...prevState.slice(0, -1), { ...lastMessage, content: lastMessage.content.trim() }]
@@ -61,7 +61,7 @@ export default function ChatUi() {
   }
 
   const makeHistory = () => {
-    const messages38 = messages.slice(-38)
+    const messages38 = messages.slice(-18)
     const formattedMessages: string[] = []
     messages38.forEach((message) => {
       const isChatbotTurn = formattedMessages.length % 2 === 1
@@ -77,37 +77,68 @@ export default function ChatUi() {
 
     if (formattedMessages.length % 2 === 1) formattedMessages.push("")
 
-    const formattedMessages38 = formattedMessages.slice(-38)
-
-    const history: string[][] = []
-    for (let i = 0; i < formattedMessages38.length; i += 2) {
-      history.push([formattedMessages38[i], formattedMessages38[i + 1]])
-    }
-    return history
+    return formattedMessages.slice(-18)
   }
 
   async function generateAIResponse(userInputValue: string, regenerate: boolean) {
-    const history = makeHistory()
-    const query = regenerate ? history[history.length - 1][0] : userInputValue
+    let history = makeHistory()
+    const query = regenerate ? history[history.length - 2] : userInputValue
+    history = regenerate ? history.slice(0, -2) : history
 
-    // 새로운 EventSource 연결 생성
-    const newEventSource = new EventSource(`/api/chat?query=${query}`)
-
-    // 메시지 수신 핸들러 설정
-    newEventSource.onmessage = (event) => {
-      if (event.data === "<stream_end_token>") {
-        setIsGenerating(false)
-        endStreamMessage()
-        newEventSource.close()
-        return
-      }
-      const formattedToken = event.data.replace(/<enter_token>/g, "\n")
-      handleStreamMessage(formattedToken)
+    // 요청 본문 설정
+    const requestBody = {
+      query,
+      history, // history 값을 그대로 전달
     }
 
-    // 에러 핸들러 설정
-    newEventSource.onerror = () => {
-      newEventSource.close() // 연결 종료
+    // 스트리밍 데이터를 처리하는 비동기 함수
+    try {
+      // POST 요청으로 SSE 데이터를 수신합니다.
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      })
+
+      // 에러 발생 시 예외 처리
+      if (!response.ok) {
+        alert("채팅 서버에 연결할 수 없습니다!")
+        setIsGenerating(false)
+        return
+      }
+
+      // 스트림을 처리하기 위한 리더를 생성합니다.
+      const reader = response.body!.getReader()
+      const decoder = new TextDecoder("utf-8")
+
+      // 스트림 읽기 및 메시지 처리
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        // eslint-disable-next-line no-await-in-loop
+        const { done, value } = await reader.read()
+        // 스트림 데이터를 디코딩하여 처리합니다.
+
+        let chunk = decoder.decode(value, { stream: true })
+        // 'data:' 프리픽스가 붙어 있는지 확인하고 제거
+        chunk = chunk.replaceAll(/data: /g, "")
+        chunk = chunk.slice(0, -2)
+
+        chunk.split("data: ").forEach((token) => {
+          // 토큰 포맷을 적절히 변환하여 처리
+          const formattedToken = token.replace(/<enter_token>/g, "\n")
+          handleStreamMessage(formattedToken)
+        })
+
+        if (done) {
+          setIsGenerating(false)
+          endStreamMessage()
+          break
+        }
+      }
+    } catch (error) {
+      // 에러 발생 시 연결 종료 및 알림
       alert("채팅 서버에 연결할 수 없습니다!")
       setIsGenerating(false)
     }
