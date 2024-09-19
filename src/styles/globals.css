@@ -28,15 +28,15 @@
     }
 
     .text-container h1 {
-        @apply text-3xl max-md:text-xl font-bold mt-6 mb-4;
+        @apply text-3xl max-md:text-xl font-bold mt-5 mb-4;
     }
 
     .text-container h2 {
-        @apply text-2xl max-md:text-lg font-semibold mt-5 mb-3;
+        @apply text-2xl max-md:text-lg font-semibold mt-4 mb-3;
     }
 
     .text-container h3 {
-        @apply text-xl max-md:text-base font-semibold mt-4 mb-2;
+        @apply text-xl max-md:text-base font-semibold mt-3 mb-2;
     }
 
     .text-container p {

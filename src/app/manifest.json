@@ -34,6 +34,30 @@
       "type": "image/png"
     }
   ],
+  "screenshots": [
+    {
+      "src": "/screenshots/1.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/2.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/3.jpg",
+      "sizes": "360x735",
+      "type": "image/png"
+    },
+    {
+      "src": "/screenshots/4.jpg",
+      "sizes": "360x735",
+      "type": "image/png"
+    }
+  ],
   "theme_color": "#365DA4",
   "background_color": "#ffffff",
   "start_url": "/",
