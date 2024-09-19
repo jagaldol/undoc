@@ -135,7 +135,7 @@ export default function ChatUi() {
 
   return (
     <div className="flex flex-col min-h-full">
-      <div className="grow flex justify-center items-center h-auto">
+      <div className="grow flex justify-center items-center h-auto mb-10">
         {messages.length === 0 ? (
           <MessageExampleContainer
             onClickExample={(message) => {

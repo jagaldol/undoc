@@ -7,8 +7,8 @@ import Footer from "@/containers/home/footer"
 import RecoilRootWrapper from "@/wrappers/RecoilRootWrapper"
 
 export const metadata = {
-  title: "AI UnDoc | 언제 어디서든지 닥터",
-  description: "AI 언닥: '언제 어디서든지 닥터'에게 물어보세요",
+  title: "AI UnDoc | 언제 어디서든 닥터",
+  description: "AI 언닥: '언제 어디서든 닥터'에게 물어보세요",
 }
 
 export const viewport: Viewport = {
@@ -28,10 +28,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           padding: 0,
         }}
       >
-        <main className="flex grow flex-col">
+        <main className="flex grow flex-col justify-center items-center">
           <RecoilRootWrapper>
             <Header />
-            <section className="grow">{children}</section>
+            <section className="grow w-[800px] max-lg:w-[80%] max-md:w-[90%]">{children}</section>
             <ConfirmModal />
             <Footer />
           </RecoilRootWrapper>
