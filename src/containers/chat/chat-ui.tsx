@@ -120,14 +120,13 @@ export default function ChatUi() {
         const { done, value } = await reader.read()
         // 스트림 데이터를 디코딩하여 처리합니다.
 
-        let chunk = decoder.decode(value, { stream: true })
-        // 'data:' 프리픽스가 붙어 있는지 확인하고 제거
-        chunk = chunk.replaceAll(/data: /g, "")
-        chunk = chunk.slice(0, -2)
+        const chunk = decoder.decode(value, { stream: true })
 
         chunk.split("data: ").forEach((token) => {
           // 토큰 포맷을 적절히 변환하여 처리
-          const formattedToken = token.replace(/<enter_token>/g, "\n")
+          let formattedToken = token.replace(/\s+/g, "").trim()
+          formattedToken = formattedToken.replaceAll(/<enter_token>/g, "\n")
+          formattedToken = formattedToken.replaceAll(/<space_token>/g, " ")
           handleStreamMessage(formattedToken)
         })
 
