@@ -1,4 +1,4 @@
-# Client
+# Undoc: Health Care Chatbot
 
 webpage implementation of AI Undoc Chatbot.
 
