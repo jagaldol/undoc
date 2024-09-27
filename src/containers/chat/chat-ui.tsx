@@ -88,7 +88,7 @@ export default function ChatUi() {
     // 요청 본문 설정
     const requestBody = {
       query,
-      history, // history 값을 그대로 전달
+      // history, // history 값을 그대로 전달
     }
 
     // 스트리밍 데이터를 처리하는 비동기 함수
