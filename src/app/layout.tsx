@@ -2,9 +2,9 @@ import "@/styles/globals.css"
 import { ReactNode } from "react"
 import { Viewport } from "next"
 import Header from "@/containers/home/header"
-import ConfirmModal from "@/containers/home/confirmModal"
 import Footer from "@/containers/home/footer"
 import RecoilRootWrapper from "@/wrappers/RecoilRootWrapper"
+import AlertModal from "@/containers/home/alertModal"
 
 export const metadata = {
   title: "AI UnDoc | 언제 어디서든 닥터",
@@ -32,7 +32,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <RecoilRootWrapper>
             <Header />
             <section className="grow w-[800px] max-lg:w-[80%] max-md:w-[90%]">{children}</section>
-            <ConfirmModal />
+            {/* <ConfirmModal /> */}
+            <AlertModal />
             <Footer />
           </RecoilRootWrapper>
         </main>
