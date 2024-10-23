@@ -24,7 +24,7 @@ export default function AlertModal() {
               <b>서비스 일시 중지 안내</b>
             </p>
           </div>
-          <div className="max-md:text-sm bg-gray-200 rounded-xl p-5 my-5 flex flex-col gap-3">
+          <div className="max-md:text-sm bg-gray-200 rounded-xl p-5 my-5 flex flex-col gap-3 break-keep">
             <p>
               현재 GPU 서버 비용 문제로 인해 서비스가 일시 중지되었습니다. 빠른 시일 내에 문제를 해결하고 서비스를
               재개할 수 있도록 노력하겠습니다.

@@ -26,7 +26,7 @@ export default function ConfirmModal() {
             <p>아래 내용 동의 후 이용 가능합니다.</p>
           </div>
           <div className="max-md:text-sm bg-gray-200 rounded-xl p-5 my-5">
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2 break-keep">
               <li>- 본 AI 챗봇이 제공하는 답변은 참고용 정보이며, 의료 전문가의 조언을 대체할 수 없습니다.</li>
               <li>
                 - AI가 생성하는 답변은 의료적으로 정확하지 않을 수 있으므로, 중요한 건강 관련 결정을 내리기 전에 반드시
