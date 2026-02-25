@@ -1,15 +1,17 @@
 "use client"
 
 import React, { useRef, useState } from "react"
-import { useRecoilState } from "recoil"
 import MessageInputContainer from "@/containers/chat/message-input-container"
 import { ChatMessage } from "@/types/chat"
 import MessageExampleContainer from "@/containers/chat/message-example-container"
 import MessageBoxList from "@/containers/chat/message-box-list"
-import messagesState from "@/states/messagesState"
+import { useMessagesState } from "@/states/messagesState"
+
+const useMockChat = process.env.NODE_ENV !== "production" && process.env.NEXT_PUBLIC_ENABLE_CHAT_MOCK === "true"
+const chatEndpoint = useMockChat ? "/api/mock/chat" : "/api/chat"
 
 export default function ChatUi() {
-  const [messages, setMessages] = useRecoilState(messagesState)
+  const [messages, setMessages] = useMessagesState()
   const messageNextKey = useRef<number>(1)
 
   const [isGenerating, setIsGenerating] = useState(false)
@@ -94,7 +96,7 @@ export default function ChatUi() {
     // 스트리밍 데이터를 처리하는 비동기 함수
     try {
       // POST 요청으로 SSE 데이터를 수신합니다.
-      const response = await fetch("/api/chat", {
+      const response = await fetch(chatEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

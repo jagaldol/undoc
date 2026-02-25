@@ -1,9 +1,8 @@
 import { IoSend } from "react-icons/io5"
 import { TbRefresh } from "react-icons/tb"
-import { useRecoilValue } from "recoil"
 import { limitInputNumber, pressEnter } from "@/utils/utils"
 import Mobile from "@/utils/mobile"
-import messagesState from "@/states/messagesState"
+import { useMessages } from "@/states/messagesState"
 
 export default function MessageInputContainer({
   onSendClick,
@@ -14,7 +13,7 @@ export default function MessageInputContainer({
   onRegenerateClick: () => void
   isGenerating: boolean
 }) {
-  const messages = useRecoilValue(messagesState)
+  const messages = useMessages()
   const isMobile = Mobile()
 
   const resizeBox = () => {

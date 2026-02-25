@@ -3,8 +3,8 @@ import { ReactNode } from "react"
 import { Viewport } from "next"
 import Header from "@/containers/home/header"
 import Footer from "@/containers/home/footer"
-import RecoilRootWrapper from "@/wrappers/RecoilRootWrapper"
 import AlertModal from "@/containers/home/alertModal"
+import { MessagesProvider } from "@/states/messagesState"
 
 export const metadata = {
   title: "AI UnDoc | 언제 어디서든 닥터",
@@ -29,13 +29,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         }}
       >
         <main className="flex grow flex-col justify-center items-center">
-          <RecoilRootWrapper>
+          <MessagesProvider>
             <Header />
             <section className="grow w-[800px] max-lg:w-[80%] max-md:w-[90%]">{children}</section>
             {/* <ConfirmModal /> */}
             <AlertModal />
             <Footer />
-          </RecoilRootWrapper>
+          </MessagesProvider>
         </main>
       </body>
     </html>

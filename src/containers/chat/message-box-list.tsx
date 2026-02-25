@@ -3,11 +3,10 @@ import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { materialDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
-import { useRecoilValue } from "recoil"
 import Image from "next/image"
 import { ChatMessage } from "@/types/chat"
-import messagesState from "@/states/messagesState"
 import Logo from "@/static/logo.png"
+import { useMessages } from "@/states/messagesState"
 
 function CodeBlock(props: any) {
   const { children, className, node, ref, ...rest } = props
@@ -59,7 +58,7 @@ function MessageBox({ message }: { message: ChatMessage }) {
 }
 
 export default function MessageBoxList() {
-  const messages = useRecoilValue(messagesState)
+  const messages = useMessages()
   const scrollTraceDownChatBox = () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 30) {
       window.scrollTo(0, document.body.scrollHeight)

@@ -1,16 +1,20 @@
 /** @type {import('next').NextConfig} */
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.API_URL
 
 const nextConfig = {
-    async rewrites() {
-        return [
-            {
-                source: "/api/chat",
-                destination: API_URL,
-            },
-        ];
-    },
-};
+  async rewrites() {
+    if (!API_URL) {
+      return []
+    }
 
-export default nextConfig;
+    return [
+      {
+        source: "/api/chat",
+        destination: API_URL,
+      },
+    ]
+  },
+}
+
+export default nextConfig

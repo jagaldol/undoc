@@ -20,6 +20,8 @@ cp .env.local.example .env.local
 
 Copy the example file and update it according to your environment.
 
+`NEXT_PUBLIC_ENABLE_CHAT_MOCK=true` enables a local mock chat endpoint only in development.
+
 ### Run Server
 
 To start the development server, run:

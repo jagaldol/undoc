@@ -1,12 +1,11 @@
 "use client"
 
 import Image from "next/image"
-import { useRecoilValue } from "recoil"
 import Logo from "@/static/logo.png"
-import messagesState from "@/states/messagesState"
+import { useMessages } from "@/states/messagesState"
 
 export default function Header() {
-  const messages = useRecoilValue(messagesState)
+  const messages = useMessages()
 
   return (
     messages.length !== 0 && (
