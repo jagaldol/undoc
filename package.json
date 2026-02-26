@@ -14,7 +14,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/react-syntax-highlighter": "^15.5.13",
     "autoprefixer": "10.4.14",
-    "axios": "^1.4.0",
+    "axios": "^1.13.5",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
     "next": "^16.1.6",
@@ -27,7 +27,7 @@
     "react-syntax-highlighter": "^15.6.1",
     "remark-gfm": "^4.0.0",
     "sharp": "^0.32.5",
-    "swiper": "^11.1.14",
+    "swiper": "^12.1.2",
     "tailwindcss": "3.3.3",
     "tar-fs": "^3.1.1",
     "typescript": "^5.9.3"
