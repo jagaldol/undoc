@@ -26,7 +26,7 @@
     "react-responsive": "^9.0.2",
     "react-syntax-highlighter": "^15.6.1",
     "remark-gfm": "^4.0.0",
-    "sharp": "^0.32.5",
+    "sharp": "^0.35.3",
     "swiper": "^12.1.2",
     "tailwindcss": "3.3.3",
     "tar-fs": "^3.1.1",
@@ -49,6 +49,7 @@
     "refractor": {
       "prismjs": "^1.30.0"
     },
-    "postcss": "8.5.15"
+    "postcss": "8.5.15",
+    "sharp": "^0.35.3"
   }
 }
